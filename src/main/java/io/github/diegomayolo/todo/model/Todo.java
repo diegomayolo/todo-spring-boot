@@ -1,5 +1,6 @@
 package io.github.diegomayolo.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,16 @@ public class Todo
     private Boolean done;
 
     @Column
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime createdDate;
 
     @Column
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime doneDate;
+
+    @PrePersist
+    public void beforeSave()
+    {
+        setCreatedDate( LocalDateTime.now() );
+    }
 }
