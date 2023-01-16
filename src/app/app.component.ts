@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms'
 import {TodoService} from "./todo.service";
 import Todo from "./todo";
@@ -9,7 +9,7 @@ import Todo from "./todo";
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent
+export class AppComponent implements OnInit
 {
   todos: Todo[] = [];
 
@@ -17,8 +17,28 @@ export class AppComponent
     description : new FormControl( '' )
   } );
 
+  /**
+   *
+   * @param service TodoService
+   */
   constructor( private service:TodoService ){}
 
+  /**
+   * ngOnInit
+   *
+   */
+  ngOnInit()
+  {
+    this.service.listTodos().subscribe( todoList =>
+    {
+      this.todos = todoList
+    } );
+  }
+
+  /**
+   * submit
+   *
+   */
   submit()
   {
     const todo: Todo = { ...this.form.value }
