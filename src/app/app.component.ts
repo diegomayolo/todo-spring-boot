@@ -29,6 +29,15 @@ export class AppComponent implements OnInit
    */
   ngOnInit()
   {
+    this.listTodos();
+  }
+
+  /**
+   * listTodos
+   *
+   */
+  listTodos()
+  {
     this.service.listTodos().subscribe( todoList =>
     {
       this.todos = todoList
